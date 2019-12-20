@@ -1,0 +1,42 @@
+<html>
+<head>
+
+</head>
+
+<body bgcolor="black" style="margin:0 0 0 0px;">
+<div id="player">
+</div>
+
+<script src="https://www.youtube.com/player_api"></script>
+<script src="video_loader.js"></script>
+<script language="JavaScript">
+    function onYouTubePlayerAPIReady() {
+        var url = document.location.href;
+        var params = url.substring(url.indexOf('?') + 1, url.length);
+        params = params.split("&");
+        if (params.length <= 0) {
+            callback.onEndedPlayer();
+            return;
+        }
+
+        // parsing parameter
+        var param_data = new Array();
+        for (var i = 0; i < params.length; i++) {
+            var param = params[i].split("=");
+            var key = param[0];
+            var value = param[1];
+
+            param_data[key] = value;
+        }
+
+        var youtubeId = param_data["youtubeid"];
+        var mute = param_data["mute"];
+        var loop = param_data["loop"];
+        if (youtubeId != undefined) {
+            // youtube id는 대소문자를 구분한다 
+            player = createYouTubePlayer(youtubeId, mute ? true : false, loop ? parseInt(loop) : 1);
+        }
+    }
+</script>
+</body>
+</html>
